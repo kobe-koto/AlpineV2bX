@@ -7,9 +7,9 @@ yellow='\033[0;33m'
 plain='\033[0m'
 
 # Display the header
-echo -e "${green}#####################################"
-echo -e "######  AlpineV2bX 基于Unoffical V2board配套V2bX ######"
-echo -e "#####################################${plain}"
+echo -e "${green}#######################################"
+echo -e "#####  AlpineV2bX kobe-koto 自用版 #####"
+echo -e "#######################################${plain}"
 
 # 菜单
 echo -e "${yellow}输入数字选择对应的操作:${plain}"
@@ -24,12 +24,12 @@ if rc-status | grep -q V2bX; then
     # 如果服务已安装，检查其状态
 service_status=$(rc-service V2bX status)
 if echo "$service_status" | grep -q "starting" || echo "$service_status" | grep -q "started"; then
-    echo -e "${green}V2bX运行中${plain}"
+    echo -e "${green}V2bX 运行中${plain}"
 else
-    echo -e "${red}V2bX未在运行${plain}"
+    echo -e "${red}V2bX 未在运行${plain}"
 fi
 else
-    echo -e "${red}V2bX服务未安装。${plain}"
+    echo -e "${red}V2bX 服务未安装。${plain}"
 fi
 # Read user input
 read -p "请输入数字: " choice
@@ -38,7 +38,7 @@ echo -e "${green}#####################################${plain}"
 case "$choice" in
 1)
 
-echo -e "${green}你选择了安装V2bX${plain}"
+echo -e "${green}你选择了安装 V2bX${plain}"
         # 更新系统软件源
         apk update
         # 安装一些必要的工具
@@ -62,10 +62,11 @@ echo -e "${green}你选择了安装V2bX${plain}"
         if  [ $# == 0 ] ;then
                 last_version=$(curl -Ls "https://api.github.com/repos/wyx2685/V2bX/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
                 if [[ ! -n "$last_version" ]]; then
-                    echo -e "${red}检测 V2bX 版本失败，默认采用 v0.0.13${plain}"
+                    echo -e "${red}检测 V2bX 版本失败，默认采用 v0.0.13，开始安装${plain}"
                     last_version=v0.0.13
+		else
+                    echo -e "${green}检测到 V2bX 最新版本：${last_version}，开始安装${plain}"
                 fi
-                echo -e "${green}检测到 V2bX 最新版本：${last_version}，开始安装${plain}"
                 wget -q -N --no-check-certificate -O '/etc/V2bX/V2bX-linux.zip' https://github.com/wyx2685/V2bX/releases/download/${last_version}/V2bX-linux-${arch}.zip
                 if [[ $? -ne 0 ]]; then
                     echo -e "${red}下载 V2bX 失败，请确保你的服务器能够下载 Github 的文件${plain}"
