@@ -62,8 +62,8 @@ echo -e "${green}你选择了安装V2bX${plain}"
         if  [ $# == 0 ] ;then
                 last_version=$(curl -Ls "https://api.github.com/repos/wyx2685/V2bX/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
                 if [[ ! -n "$last_version" ]]; then
-                    echo -e "${red}检测 V2bX 版本失败，默认采用2024年1月28日版本${plain}"
-                    last_version=v0.0.1-20240128
+                    echo -e "${red}检测 V2bX 版本失败，默认采用 v0.0.13${plain}"
+                    last_version=v0.0.13
                 fi
                 echo -e "${green}检测到 V2bX 最新版本：${last_version}，开始安装${plain}"
                 wget -q -N --no-check-certificate -O '/etc/V2bX/V2bX-linux.zip' https://github.com/wyx2685/V2bX/releases/download/${last_version}/V2bX-linux-${arch}.zip
@@ -287,15 +287,13 @@ EOF
 )
 		;;
         3 )
-            read -rp "CertFile绝对路径：" CertFile
-            read -rp "KeyFile绝对路径：" KeyFile
 cert_config=$(cat <<EOF
 "CertConfig": {
     "CertMode": "self",
     "RejectUnknownSni": false,
     "CertDomain": "$certdomain",
-    "CertFile": "$CertFile",
-    "KeyFile": "$KeyFile"            
+    "CertFile": "/etc/V2bX/fullchain.cer",
+    "KeyFile": "/etc/V2bX/cert.key",          
              }
 EOF
 )
