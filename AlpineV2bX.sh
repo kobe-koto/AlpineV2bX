@@ -703,15 +703,13 @@ EOF
 )
 		;;
         3 )
-            read -rp "CertFile绝对路径：" CertFile
-            read -rp "KeyFile绝对路径：" KeyFile
 cert_config=$(cat <<EOF
 "CertConfig": {
     "CertMode": "self",
     "RejectUnknownSni": false,
     "CertDomain": "$certdomain",
-    "CertFile": "$CertFile",
-    "KeyFile": "$KeyFile"            
+    "CertFile": "/etc/V2bX/fullchain.cer",
+    "KeyFile": "/etc/V2bX/cert.key",
              }
 EOF
 )
